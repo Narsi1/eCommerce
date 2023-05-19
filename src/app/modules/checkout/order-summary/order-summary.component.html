@@ -1,0 +1,30 @@
+<div class="container-fluid" *ngIf="cart.length">
+
+    <!-- All Products in Cart -->
+  <div class="row border-bottom mb-3 pb-3" *ngFor="let item of cart">
+    <div class="col-4">
+      <img [src]="item.images[0]" alt="" class="w-100" />
+    </div>
+    <div class="col-4">
+      <p>
+        {{item.title}}
+      </p>
+      <p>
+        <span class="me-2">Quantity :- </span>  {{item.selectedQuantity}}
+      </p>
+    </div>
+    <div class="col-4">
+      <p>
+        {{item.price | currency}}
+      </p>
+    </div>
+  </div>
+
+  <!-- Order Total -->
+  <div class="row">
+    <div class="col-12">
+        <h4>Order Total</h4>
+        <span>{{orderTotal | currency}}</span>
+    </div>
+  </div>
+</div>

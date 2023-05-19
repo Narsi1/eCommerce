@@ -1,0 +1,22 @@
+<div class="container-fluid mt-3">
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4" *ngIf="productData">
+    <div class="col" *ngFor="let product of productData.products">
+      <div class="card shadow" (click)="showProductDetails(product)" role="button">
+        <div class="p-4">
+            <img
+          src="{{ product.images[0] }}"
+          class="card-img-top product-img"
+          alt="..."
+        />
+        </div>
+        <div class="card-body">
+          <strong class="card-title">{{ product.title }}</strong>
+          <!-- <p class="card-text">{{ product.description }}</p> -->
+          <p class="card-price">
+            <strong class="text-success">{{ product.price | currency }}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

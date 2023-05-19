@@ -1,0 +1,52 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between">
+      <h6>Shopping Cart</h6>
+      <h6>Subtotal {{ cartTotal | currency }}</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 card">
+      <div class="container">
+        <div class="row p-3 border-bottom" *ngFor="let item of cart">
+          <div class="col-3">
+            <img
+              src="{{ item.images[0] }}"
+              class="product-img img-fluid"
+              alt=""
+            />
+          </div>
+          <div class="col-5">
+            <p>{{ item.title }}</p>
+            <p>{{ item.description }}</p>
+            <div>
+              <span> Quantity </span>
+              <button class="btn btn-sm" (click)="decreaseQuantity(item.id)">
+                <i class="fa fa-minus-square" aria-hidden="true"></i>
+              </button>
+              <span>
+                {{ item.selectedQuantity }}
+              </span>
+              <button class="btn btn-sm" (click)="increaseQuantity(item.id)">
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div>
+              <i
+                class="fa fa-trash text-danger"
+                role="button"
+                (click)="removeItem(item.id)"
+                aria-hidden="true"
+              ></i>
+            </div>
+          </div>
+          <div class="col-4">
+            <p class="d-flex justify-content-end">
+              {{ item.price | currency }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

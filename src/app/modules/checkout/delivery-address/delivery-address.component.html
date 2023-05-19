@@ -1,0 +1,179 @@
+<form
+  class="row g-3"
+  [formGroup]="addressForm"
+  *ngIf="showAddressForm; else showAddressSummary"
+>
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      id="inputEmail4"
+      formControlName="email"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('email')?.dirty || formSubmitted) &&
+        addressForm.get('email')?.hasError('required')
+      "
+    >
+      Please enter email
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="fullName" class="form-label">Full Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="fullName"
+      formControlName="fullName"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('fullName')?.dirty || formSubmitted) &&
+        addressForm.get('fullName')?.hasError('required')
+      "
+    >
+      Please enter Full Name
+    </div>
+  </div>
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputAddress"
+      placeholder="Street number"
+      formControlName="address1"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('address1')?.dirty || formSubmitted) &&
+        addressForm.get('address1')?.hasError('required')
+      "
+    >
+      Please enter address
+    </div>
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Address 2</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputAddress2"
+      placeholder="suburb"
+      formControlName="address2"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('address2')?.dirty || formSubmitted) &&
+        addressForm.get('address2')?.hasError('required')
+      "
+    >
+      Please enter address 2
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">City</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputCity"
+      formControlName="city"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('city')?.dirty || formSubmitted) &&
+        addressForm.get('city')?.hasError('required')
+      "
+    >
+      Please enter city
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" class="form-select" formControlName="state">
+      <option value="null" disabled>-- Select state --</option>
+      <option value="VIC">VIC</option>
+      <option value="NSW">NSW</option>
+      <option value="TAS">TAS</option>
+      <option value="SA">SA</option>
+      <option value="WA">WA</option>
+      <option value="QLD">QLD</option>
+    </select>
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('state')?.dirty || formSubmitted) &&
+        addressForm.get('state')?.hasError('required')
+      "
+    >
+      Please enter state
+    </div>
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Postcode</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputZip"
+      formControlName="postcode"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('postcode')?.dirty || formSubmitted) &&
+        addressForm.get('postcode')?.hasError('required')
+      "
+    >
+      Please enter postcode
+    </div>
+    <div
+      class="text-danger"
+      *ngIf="
+        (addressForm.get('postcode')?.dirty || formSubmitted) &&
+        addressForm.get('postcode')?.hasError('maxLength')
+      "
+    >
+      Postcode should be of 4 characters
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="setDeliveryAddress()"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+
+<ng-template #showAddressSummary>
+    <div>
+      <div>
+        {{ addressForm.value.fullName }} <br />
+        {{ addressForm.value.email }} <br />
+  
+        {{ addressForm.value.address1 }} <br />
+        {{ addressForm.value.address2 }} <br />
+  
+        {{ addressForm.value.state }} , {{ addressForm.value.city }},
+        {{ addressForm.value.postcode }} <br />
+        {{ addressForm.value.phonenumber }} <br />
+      </div>
+      <button
+        class="btn btn-primary"
+        *ngIf="!showAddressForm"
+        (click)="showAddressForm = true"
+      >
+        Change
+      </button>
+    </div>
+  </ng-template>

@@ -63,4 +63,8 @@ export class CartService {
     });
     this.publishCart();
   }
+  clearCart(): void {
+    this.cart = [];
+    this.publishCart();
+  }
 }

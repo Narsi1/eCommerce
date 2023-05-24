@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from 'src/app/shared/interfaces/product.interface';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ProductService } from 'src/app/shared/services/product.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,10 +18,11 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private productService: ProductService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastService: ToastService
   ) {
-    activatedRoute.params.subscribe(params=> {
-      productService.getProductById(params['id']).subscribe(product=> {
+    this.activatedRoute.params.subscribe(params=> {
+      this.productService.getProductById(params['id']).subscribe(product=> {
         this.product= product;
       })
       
@@ -34,6 +36,7 @@ export class ProductDetailsComponent implements OnInit {
         ...this.product,
         selectedQuantity: 1
       });
+      this.toastService.success('Item added to cart!!');
     }
   }
  

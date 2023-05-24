@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { IProduct } from 'src/app/shared/interfaces/product.interface';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -8,6 +9,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
   styleUrls: ['./order-summary.component.scss']
 })
 export class OrderSummaryComponent implements OnInit {
+  @Output() placeOrderClicked = new EventEmitter();
   cart: IProduct[] = [];
   orderTotal = 0;
   constructor(
@@ -16,11 +18,15 @@ export class OrderSummaryComponent implements OnInit {
     this.cartService.getCart().subscribe(_ => {
       this.cart = _;
       console.log(this.cart);
-      
+      this.cart.forEach(product => {
+        this.orderTotal = this.orderTotal + (product.price * product.selectedQuantity);
+      })
     })
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  ngOnInit(): void {}
+
+  placeOrder(): void {
+    this.placeOrderClicked.emit();
   }
 
 }

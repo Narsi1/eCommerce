@@ -1,22 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-delivery-address',
   templateUrl: './delivery-address.component.html',
-  styleUrls: ['./delivery-address.component.scss']
+  styleUrls: ['./delivery-address.component.scss'],
 })
 export class DeliveryAddressComponent implements OnInit {
-  // Input from parent
-  @Input() addressForm: FormGroup = new FormGroup({});
-
+  @Output() isAddressValid = new EventEmitter<boolean>();
+  
+  addressForm: FormGroup = new FormGroup({});
   formSubmitted = false;
   showAddressForm = true;
-  constructor(private fb: FormBuilder) {
-
-  }
+  constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     this.initForm();
+    this.addressForm.valueChanges.subscribe(() => {
+      this.isAddressValid.emit(this.addressForm.valid);
+    });
+    this.isAddressValid.emit(this.addressForm.valid);
   }
 
   initForm(): void {
@@ -37,5 +39,4 @@ export class DeliveryAddressComponent implements OnInit {
     this.formSubmitted = true;
     this.showAddressForm = false;
   }
-
 }

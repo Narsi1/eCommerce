@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IProduct } from 'src/app/shared/interfaces/product.interface';
 import { CartService } from 'src/app/shared/services/cart.service';
 
@@ -10,7 +11,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
 export class CartComponent implements OnInit {
   cart: IProduct[] = [];
   cartTotal = 0;
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private router: Router) {
     this.cartService.getCart().subscribe((cartdata) => {
       this.cartTotal = 0;
       this.cart = cartdata;
@@ -31,5 +32,13 @@ export class CartComponent implements OnInit {
   }
   decreaseQuantity(id: number): void {
     this.cartService.decreaseQuantity(id);
+  }
+
+  proceedToCheckout(): void {
+    this.router.navigate(['checkout']);
+  }
+
+  goToHome(): void {
+    this.router.navigate(['home']);
   }
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { OrderPlacedComponent } from '../order-placed/order-placed.component';
 
 @Component({
   selector: 'app-checkout',
@@ -7,57 +10,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
-  addressForm: FormGroup = new FormGroup({});
-  creditCardForm: FormGroup = new FormGroup({});
-  paymentTypeForm: FormGroup = new FormGroup({});
   formSubmitted = false;
   showAddressForm = true;
   cards = [];
-  showCreditCardSection = true;
-  showPaypalSection = false;
-  constructor(private formbuilder: FormBuilder) {}
-  ngOnInit(): void {
-    this.initCreditCardForm();
-  }
-  
-  initCards(): void {
-    this.cards = [
-      {
-        type: 'mastercard',
-        cardnumber: '0000 0000 0000 0000',
-        name: 'John Smith',
-        expirydate: '01/2000',
-        cvv: '000',
-      },
-      {
-        type: 'visa',
-        cardnumber: '0000 0000 0000 1111',
-        name: 'John Ray',
-        expirydate: '01/2010',
-        cvv: '007',
-      },
-    ] as any;
-  }
+  isAddressFormValid = false;
+  isPaymentValid = false;
+  constructor(private toast: ToastService, private modalService: NgbModal) {}
+  ngOnInit(): void {}
+
   setDeliveryAddress(): void {
     this.formSubmitted = true;
     this.showAddressForm = false;
   }
-  initCreditCardForm(): void {
-    this.creditCardForm = this.formbuilder.group({
-      cardnumber: ['0000 0000 0000 0000', Validators.required],
-      nameonthecard: ['John Smith', [Validators.required]],
-      expirymonth: ['Jan', Validators.required],
-      expiryyear: ['2023', Validators.required],
-      securitycode: ['000', Validators.required],
-    });
+
+  placeOrder(): void {
+    if (this.isAddressFormValid === false) {
+      this.toast.error('Please enter valid delivery address!!');
+    } else if (this.isPaymentValid === false) {
+      this.toast.error('Please enter valid payment details!!');
+    } else {
+      this.toast.success('Order placed');
+      const modalRef= this.modalService.open(OrderPlacedComponent);
+    }
   }
-  initPaymentTypeForm(): void {
-    this.paymentTypeForm = this.formbuilder.group({
-      cardnumber: ['0000 0000 0000 0000', Validators.required],
-      nameonthecard: ['John Smith', [Validators.required]],
-      expirymonth: ['Jan', Validators.required],
-      expiryyear: ['2023', Validators.required],
-      securitycode: ['000', Validators.required],
-    });
+
+  updateAddressFormValidity(isFormValid: boolean): void {
+    this.isAddressFormValid = isFormValid;
+  }
+  updatePaymentValid(isValid: boolean): void {
+    this.isPaymentValid = isValid;
   }
 }

@@ -22,9 +22,18 @@
 
   <!-- Order Total -->
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 d-flex justify-content-around">
         <h4>Order Total</h4>
         <span>{{orderTotal | currency}}</span>
+    </div>
+  </div>
+
+  <!-- Checkout -->
+  <div class="row mt-3">
+    <div class="col-12 d-flex justify-content-center">
+      <button class="btn btn-success" (click)="placeOrder()">
+        Place Order
+      </button>
     </div>
   </div>
 </div>

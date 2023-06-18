@@ -12,11 +12,20 @@ export class AppComponent implements OnInit {
     private cartService: CartService,
     public toastService: ToastService
   ) {}
+
+  /**
+   * Initializes the component.
+   * Retrieves the cart from local storage and initializes the cart service with the cart data.
+   */
   ngOnInit(): void {
+    // Retrieve the cart data from local storage
     const cart = localStorage.getItem('cart');
     if (cart) {
+      // Initialize the cart service with the cart data
       this.cartService.initCart(JSON.parse(cart));
     }
   }
+
+  // The title of the application
   title = 'eCommerce';
 }

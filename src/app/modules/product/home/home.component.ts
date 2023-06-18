@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   IProduct,
   IProductData,
 } from 'src/app/shared/interfaces/product.interface';
 import { ProductService } from 'src/app/shared/services/product.service';
-import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -14,18 +12,24 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  // Property to hold the fetched product data
   productData: IProductData | undefined;
+
   constructor(
     private productService: ProductService,
-    private modalService: NgbModal,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    productService.getProducts().subscribe((data) => {
+    // Fetch the product data from the ProductService
+    this.productService.getProducts().subscribe((data) => {
       this.productData = data;
     });
   }
+
+  // Method to navigate to the product details page for the selected product
   showProductDetails(product: IProduct): void {
-    this.router.navigate([`./${product.id}`], {relativeTo: this.activatedRoute})
+    this.router.navigate([`./${product.id}`], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

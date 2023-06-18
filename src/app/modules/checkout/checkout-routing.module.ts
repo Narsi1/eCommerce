@@ -4,13 +4,13 @@ import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   {
-    path: 'checkout',
-    component: CheckoutComponent
-  }
+    path: 'checkout', // URL path for the checkout route
+    component: CheckoutComponent, // Component to be rendered for the checkout route
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)], // Register the defined routes for the Checkout module
+  exports: [RouterModule], // Export the configured router module for use in other modules
 })
-export class CheckoutRoutingModule { }
+export class CheckoutRoutingModule {}

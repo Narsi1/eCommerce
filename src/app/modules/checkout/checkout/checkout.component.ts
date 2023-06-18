@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { OrderPlacedComponent } from '../order-placed/order-placed.component';
 
 @Component({
   selector: 'app-checkout',
@@ -7,57 +9,63 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
-  addressForm: FormGroup = new FormGroup({});
-  creditCardForm: FormGroup = new FormGroup({});
-  paymentTypeForm: FormGroup = new FormGroup({});
+  // Indicates whether the form has been submitted
   formSubmitted = false;
+
+  // Indicates whether the address form is currently being shown
   showAddressForm = true;
-  cards = [];
-  showCreditCardSection = true;
-  showPaypalSection = false;
-  constructor(private formbuilder: FormBuilder) {}
+
+  // Indicates the validity of the address form
+  isAddressFormValid = false;
+
+  // Indicates the validity of the payment
+  isPaymentValid = false;
+
+  constructor(private toast: ToastService, private modalService: NgbModal) {
+    // Constructor for the CheckoutComponent class.
+    // Injects the ToastService and NgbModal dependencies.
+  }
+
   ngOnInit(): void {
-    this.initCreditCardForm();
+    // Lifecycle hook called when the component initializes.
   }
-  
-  initCards(): void {
-    this.cards = [
-      {
-        type: 'mastercard',
-        cardnumber: '0000 0000 0000 0000',
-        name: 'John Smith',
-        expirydate: '01/2000',
-        cvv: '000',
-      },
-      {
-        type: 'visa',
-        cardnumber: '0000 0000 0000 1111',
-        name: 'John Ray',
-        expirydate: '01/2010',
-        cvv: '007',
-      },
-    ] as any;
-  }
+
+  /**
+   * @description Sets the delivery address and marks the form as submitted.
+   */
   setDeliveryAddress(): void {
     this.formSubmitted = true;
     this.showAddressForm = false;
   }
-  initCreditCardForm(): void {
-    this.creditCardForm = this.formbuilder.group({
-      cardnumber: ['0000 0000 0000 0000', Validators.required],
-      nameonthecard: ['John Smith', [Validators.required]],
-      expirymonth: ['Jan', Validators.required],
-      expiryyear: ['2023', Validators.required],
-      securitycode: ['000', Validators.required],
-    });
+
+  /**
+   * @description Places an order based on the validity of the address form and payment details.
+   * Displays appropriate toast messages and opens the OrderPlacedComponent modal if the order is valid.
+   */
+  placeOrder(): void {
+    if (this.isAddressFormValid === false) {
+      this.toast.error('Please enter a valid delivery address!');
+    } else if (this.isPaymentValid === false) {
+      this.toast.error('Please enter valid payment details!');
+    } else {
+      this.toast.success('Order placed');
+      this.modalService.open(OrderPlacedComponent);
+    }
   }
-  initPaymentTypeForm(): void {
-    this.paymentTypeForm = this.formbuilder.group({
-      cardnumber: ['0000 0000 0000 0000', Validators.required],
-      nameonthecard: ['John Smith', [Validators.required]],
-      expirymonth: ['Jan', Validators.required],
-      expiryyear: ['2023', Validators.required],
-      securitycode: ['000', Validators.required],
-    });
+
+  /**
+   * @description Updates the validity of the address form based on the parameter value.
+   * @param isFormValid Boolean value indicating the validity of the address form.
+   */
+  updateAddressFormValidity(isFormValid: boolean): void {
+    this.isAddressFormValid = isFormValid;
+  }
+
+  /**
+   * @description Updates the validity of the payment based on the parameter value.
+   * @param isValid Boolean value indicating the validity of the payment details.
+   */
+  updatePaymentValid(isValid: boolean): void {
+    this.isPaymentValid = isValid;
   }
 }

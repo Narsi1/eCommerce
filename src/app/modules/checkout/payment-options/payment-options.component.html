@@ -1,0 +1,150 @@
+<!-- Credit card -->
+<div class="border p-2">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="payment"
+      id="flexRadioDefault1"
+      [checked]="showCreditCardSection"
+      (click)="displayCreditCardSection()"
+    />
+    <label class="form-check-label" for="flexRadioDefault1">
+      Credit or debit card
+    </label>
+  </div>
+
+  <div class="mt-3">
+    <form
+      class="row mt-3 g-3"
+      *ngIf="showCreditCardSection"
+      [formGroup]="creditCardForm"
+    >
+      <div class="col-12">
+        <label for="inputEmail4" class="form-label">Card number</label>
+        <input
+          type="email"
+          class="form-control"
+          id="inputEmail4"
+          formControlName="cardnumber"
+        />
+        <div
+          class="text-danger"
+          *ngIf="
+            (creditCardForm.get('cardnumber')?.dirty || formSubmitted) &&
+            creditCardForm.get('cardnumber')?.hasError('required')
+          "
+        >
+          Please enter card number
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="fullName" class="form-label">Name on card</label>
+        <input
+          type="text"
+          class="form-control"
+          id="fullName"
+          formControlName="nameonthecard"
+        />
+        <div
+          class="text-danger"
+          *ngIf="
+            (creditCardForm.get('nameonthecard')?.dirty || formSubmitted) &&
+            creditCardForm.get('nameonthecard')?.hasError('required')
+          "
+        >
+          Please enter the name on the card
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="month" class="form-label">Expiration month(MM)</label>
+        <select id="month" class="form-select" formControlName="expirymonth">
+          <option value="null" disabled>-- Select month --</option>
+          <option value="Jan">Jan</option>
+          <option value="Feb">Feb</option>
+          <option value="Mar">Mar</option>
+          <option value="Apr">Apr</option>
+          <option value="May">May</option>
+          <option value="Jun">Jun</option>
+          <option value="Jul">Jul</option>
+          <option value="Aug">Aug</option>
+          <option value="Sep">Sep</option>
+          <option value="Oct">Oct</option>
+          <option value="Nov">Nov</option>
+          <option value="Dec">Dec</option>
+        </select>
+        <div
+          class="text-danger"
+          *ngIf="
+            (creditCardForm.get('expirymonth')?.dirty || formSubmitted) &&
+            creditCardForm.get('expirymonth')?.hasError('required')
+          "
+        >
+          Please select expiry month
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="year" class="form-label">Expiration year(YYYY)</label>
+        <select id="year" class="form-select" formControlName="expiryyear">
+          <option value="null" disabled>-- Select year --</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+          <option value="2030">2030</option>
+          <option value="2031">2031</option>
+          <option value="2032">2032</option>
+        </select>
+        <div
+          class="text-danger"
+          *ngIf="
+            (creditCardForm.get('expiryyear')?.dirty || formSubmitted) &&
+            creditCardForm.get('expiryyear')?.hasError('required')
+          "
+        >
+          Please select expiry year
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="fullName" class="form-label">Security code</label>
+        <input
+          type="text"
+          class="form-control"
+          id="fullName"
+          formControlName="securitycode"
+        />
+        <div
+          class="text-danger"
+          *ngIf="
+            (creditCardForm.get('securitycode')?.dirty || formSubmitted) &&
+            creditCardForm.get('securitycode')?.hasError('required')
+          "
+        >
+          Please enter security code
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Paypal -->
+<div class="border p-2">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="payment"
+      id="flexRadioDefault1"
+      (click)="displayPaymentSection()"
+    />
+    <label class="form-check-label" for="flexRadioDefault1"> Paypal </label>
+  </div>
+  <form class="row mt-3" *ngIf="showPaypalSection">
+    <div>
+      <span> Click here to redirect to paypal portal </span>
+    </div>
+  </form>
+</div>

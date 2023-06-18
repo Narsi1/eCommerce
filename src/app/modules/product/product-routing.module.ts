@@ -5,14 +5,13 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent,
+    path: 'home', // Path for the home page
+    component: HomeComponent, // Component to be displayed for the home page
   },
   {
-    path: 'home/:id',
-    component: ProductDetailsComponent,
+    path: 'home/:id', // Path for the product details page with a dynamic parameter 'id'
+    component: ProductDetailsComponent, // Component to be displayed for the product details page
   },
- 
 ];
 
 @NgModule({
